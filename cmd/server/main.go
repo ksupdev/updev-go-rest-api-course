@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/ksupdev/updev-go-rest-api-course/internal/database"
 	transportHTTP "github.com/ksupdev/updev-go-rest-api-course/internal/transport/http"
 )
 
@@ -13,10 +15,17 @@ type App struct{}
 // Run setup our application
 func (app *App) Run() error {
 	fmt.Println("Setting Up Our App")
+
+	var err error
+	_, err = database.NewDatabase()
+	if err != nil {
+		return err
+	}
+
 	handler := transportHTTP.NewHandler()
 	handler.SetupRoutes()
 
-	if err := http.ListenAndServe(":8080",handler.Router); err != nil {
+	if err := http.ListenAndServe(":8080", handler.Router); err != nil {
 
 		fmt.Println("Failed to set up server")
 		return err
@@ -25,11 +34,10 @@ func (app *App) Run() error {
 	return nil
 }
 
-
-func main(){
+func main() {
 	fmt.Println("GO REST API Course")
 	app := App{}
-	if err := app.Run(); err != nil{
+	if err := app.Run(); err != nil {
 		fmt.Println("Error starting up our REST API")
 		fmt.Println(err)
 	}

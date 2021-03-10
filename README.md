@@ -85,8 +85,10 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
     go get: added github.com/gorilla/mux v1.8.0
 
     ```
+    และทำการ Implement ``handler.go`` เพื่อทำการจัดการ Routes ตามที่มีการ Request เข้ามา ซึ่งก็คือจะทำการรับ request ``/api/health``และทำการ response ``I'm alive!``
 
-    ทำการ implement net/http เพื่อใช้สำหรับกับรับ Http Request
+
+    และทำการ implement net/http เพื่อใช้สำหรับรับ Http Request และส่วไปให้ handler.goเป็นคนจัดการกับ Request นั้นๆ
 
     ทำการทดสอบ
 
@@ -103,5 +105,59 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
     StatusDescription : OK
     Content           : I'm alive!
     ```
+
+- Running Postgres Locally with Docker
+    Getting a docker instance up and running locally using docker
+    ```docker
+    docker run --name some-postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
+
+    PS D:\git-myself\GO\go-projects\labs\updev-go-rest-api-course> docker ps
+    CONTAINER ID   IMAGE      COMMAND                  CREATED          STATUS          PORTS                    NAMES
+    f7cf9e4973b6   postgres   "docker-entrypoint.s…"   22 seconds ago   Up 21 seconds   0.0.0.0:5432->5432/tcp   some-postgres
+
+    ```
+- Implementing the Database Package
+    
+    Create a new directory within `internal` directory called ``database``
+    ```
+    mkdir .\internal\database 
+    ```
+
+    Create a new file called database.go และทำการ import GORM และ postgress driver ของ สำหรับ gorm
+    ```GO
+        import (
+            "fmt"
+
+            "github.com/jinzhu/gorm"
+            _ "github.com/jinzhu/gorm/dialects/postgres"
+        )
+    ```
+    จาก Code จะเห็นว่ามีการ ใช้ ``_`` อยู่หน้า ``github.com/jinzhu/gorm/dialects/postgres`` นั้นเป็นการบอกว่าเป็นการ Import ในส่วนของ module ที่มีการเกี่ยวข้อง หรือมีผลกับ module ด้านบน
+
+    ทำการ run command เพื่อ Download modulec และติดตั้งใน project
+
+    ```powershell
+    PS D:\git-myself\GO\go-projects\labs\updev-go-rest-api-course> go get github.com/jinzhu/gorm
+    go: downloading github.com/jinzhu/gorm v1.9.16
+    go: downloading github.com/jinzhu/inflection v1.0.0
+    go get: added github.com/jinzhu/gorm v1.9.16
+    PS D:\git-myself\GO\go-projects\labs\updev-go-rest-api-course> go get github.com/jinzhu/gorm/dialects/postgres
+    go: downloading github.com/lib/pq v1.1.1
+    ```
+
+    ทำการ Implement ในส่วน defind dtabase properties และส่วนของการ Connect database ที่ ``file database.go``
+
+
+    ทำการ run เพื่อ Test 
+    ``` powershell
+    PS D:\git-myself\GO\go-projects\labs\updev-go-rest-api-course> go run .\cmd\server\main.go
+    GO REST API Course
+    Setting Up Our App
+    Setting up new database connection
+    Setting Up Routes
+
+    ```
+
+
  
  
