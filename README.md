@@ -63,5 +63,45 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
     }
     ```
     เป็นการประกาศ Method Run สำหรับ App struct{}
+
+- Implementing the Transport Package (health check)
+    ```powershell
+    PS D:\GO\updev-go-rest-api-course>mkdir internal
+    PS D:\GO\updev-go-rest-api-course\internal>mkdir transport
+    PS D:\GO\updev-go-rest-api-course\internal\transport>mkdir http
+    ```
+    ทำการสร้าง ``handler.go``
+
+    ```GO
+
+    ```
+
+    ทำการ implement "github.com/gorilla/mux"
+
+    ```powershell
+    PS D:\git-myself\GO\go-projects\labs\updev-go-rest-api-course> go get github.com/gorilla/mux                                                                               
+    PS D:\git-myself\GO\go-projects\labs\updev-g
+    go: downloading github.com/gorilla/mux v1.8.0
+    go get: added github.com/gorilla/mux v1.8.0
+
+    ```
+
+    ทำการ implement net/http เพื่อใช้สำหรับกับรับ Http Request
+
+    ทำการทดสอบ
+
+    ```powershell
+    PS D:\git-myself\GO\go-projects\labs\updev-go-rest-api-course> go run .\cmd\server\main.go
+    GO REST API Course
+    Setting Up Our App
+    Setting Up Routes
+    
+    ..... New terminal
+
+    PS D:\git-myself\GO\go-projects\labs\updev-go-rest-api-course> curl http://localhost:8080/api/health
+    StatusCode        : 200
+    StatusDescription : OK
+    Content           : I'm alive!
+    ```
  
  
