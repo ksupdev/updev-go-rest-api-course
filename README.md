@@ -158,6 +158,16 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
 
     ```
 
+    ในไฟล์ ``main.go``
+    ```GO
+	var err error
+	_, err = database.NewDatabase()
+	if err != nil {
+		return err
+	}
+    ```
+    จาก Code เราจะเห็น ``_, err = database.NewDatabase()`` เราสามารถเลือกที่จะไม่รับการค่า ที่ได้รับการ return มาจาก method ได้ โดยการใช้ underscode ``_``
+
 
  
  
