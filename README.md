@@ -11,4 +11,21 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
     ```powershell
     mkdir cmd/server
     ```
+    ```GO
+    [filename : main.go]
+    package main
+
+    import "fmt"
+
+    func main(){
+        fmt.Println("GO REST API Course")
+    }
+    ```
+    ทำการทดสอบ 
+
+    ``` powershell
+    PS D:\GO\updev-go-rest-api-course> go run .\cmd\server\main.go
+    GO REST API Course
+    ```
+ 
  
