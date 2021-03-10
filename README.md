@@ -30,8 +30,38 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
 
 - ทำการสร้าง ส่วนของการ Connect database โดยการใช้ struct ที่มีการระบุการทำงานให้เป็นแบบ pointers ** ใน GO เราสามารถเลือกได้ว่า Struct ที่เราสร้างขึ้นนั้นจะมมีการทำงานแบบ pointers หรือจะให้เป็นแต่ value ธรรมดา
     ```GO
-    
-    ```
+    package main
 
+    import "fmt"
+
+    // App - the struct which contains thinks like pointers
+    // to database connections
+    type App struct{}
+
+    // Run setup our application
+    func (app *App) Run() error {
+        fmt.Println("Setting Up Our App")
+        return nil
+    }
+
+
+    func main(){
+        fmt.Println("GO REST API Course")
+        app := App{}
+        if err := app.Run(); err != nil{
+            fmt.Println("Error starting up our REST API")
+            fmt.Println(err)
+        }
+
+    }
+    ```
+    
+    ```GO
+    func (app *App) Run() error {
+        fmt.Println("Setting Up Our App")
+        return nil
+    }
+    ```
+    เป็นการประกาศ Method Run สำหรับ App struct{}
  
  
