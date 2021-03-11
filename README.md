@@ -168,6 +168,53 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
     ```
     จาก Code เราจะเห็น ``_, err = database.NewDatabase()`` เราสามารถเลือกที่จะไม่รับการค่า ที่ได้รับการ return มาจาก method ได้ โดยการใช้ underscode ``_``
 
+- Defining the Comment Service
+        ```GO
+        [filename : comment.go]
+
+        type Service struct {
+            DB *gorm.DB
+        }
+
+        func NewService(db *gorm.DB) *Service {
+            return &Service{
+                DB: db,
+            }
+        }
+        ```
+        >ถ้าเราสังเกตดีๆจะพบว่า ทำไมถึงมีการ ``return &Service{.....`` จากที่พยายามไปหาข้อมูลมา มันคือ 
+        
+        [Constructors and composite literals](https://golang.org/doc/effective_go#composite_literals) หรือมันก็คือการ
+        Return ค่าพร้อมกับการกำหนด value ให้กับ Struct นั้นเอง
+
+- Implementing our Comment service
+    ทำการสร้าง Method สำหรับ struct Service
+    ```GO
+    [filename : comment.go]
+
+    // Comment - defines our comment struct
+    type Comment struct {
+        gorm.Model
+        Slug   string
+        Body   string
+        Author string
+    }
+    
+
+    func (s *Service) GetComment(ID uint) (Comment, error){}
+
+    // GetCommentsBySlug - retrieves all comments by slug (path -/article/name/)
+    func (s *Service) GetCommentsBySlug(slug string) ([]Comment, error) {}
+
+    func (s *Service) PostComment(comment Comment) (Comment, error) {}
+
+    func (s *Service) UpdateComment(ID uint, newComment Comment) (Comment, error) {}
+
+    func (s *Service) DeleteComment(ID uint) error {}
+
+    func (s *Service) GetAllComments() ([]Comment, error) {}
+    ```
+
 
  
  
