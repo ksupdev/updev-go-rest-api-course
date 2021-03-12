@@ -215,6 +215,10 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
     func (s *Service) GetAllComments() ([]Comment, error) {}
     ```
 
+- Implementing The Comment REST API Endpoints
+
+
+
 
  
  
