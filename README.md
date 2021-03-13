@@ -223,6 +223,19 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
      var intNumber uint   = uint(i)
     ```
 
+- Migrating Our Database and Testing our Endpoints Manually
+    Create ``migration.go`` [migrate command](https://gorm.io/docs/migration.html)
+    ```GO
+    func MigrateDB(db *gorm.DB) error {
+        if result := db.AutoMigrate(&comment.Comment{}); result.Error != nil {
+            return result.Error
+        }
+        return nil
+    }
+    ```
+    โดย Method นี้ จะทำการ auto generate database schema
+
+
 
 
 
