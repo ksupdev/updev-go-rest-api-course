@@ -216,6 +216,12 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
     ```
 
 - Implementing The Comment REST API Endpoints
+    > Convert string to uint by ``strconv`` [REF](https://golang.org/pkg/strconv/)
+    ``` GO
+     id := vars["id"]
+	 i, err := strconv.ParseUint(id,10,64)
+     var intNumber uint   = uint(i)
+    ```
 
 
 

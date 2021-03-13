@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/ksupdev/updev-go-rest-api-course/internal/comment"
 	"github.com/ksupdev/updev-go-rest-api-course/internal/database"
 	transportHTTP "github.com/ksupdev/updev-go-rest-api-course/internal/transport/http"
 )
@@ -17,12 +18,14 @@ func (app *App) Run() error {
 	fmt.Println("Setting Up Our App")
 
 	var err error
-	_, err = database.NewDatabase()
+	db, err := database.NewDatabase()
 	if err != nil {
 		return err
 	}
 
-	handler := transportHTTP.NewHandler()
+	commentService := comment.NewService(db)
+
+	handler := transportHTTP.NewHandler(commentService)
 	handler.SetupRoutes()
 
 	if err := http.ListenAndServe(":8080", handler.Router); err != nil {
