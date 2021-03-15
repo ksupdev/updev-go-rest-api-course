@@ -235,6 +235,33 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
     ```
     โดย Method นี้ จะทำการ auto generate database schema
 
+- Handling JSON
+    สร้าง Struct Response สำหรับเป็นโครงสร้างสำหรับ Response สำหรับ Response ข้อมูลในรูปแบบ JSON
+    ```GO
+    [filename:handler.go]
+
+    type Response struct {
+        Message string
+    }
+    ```
+
+    ในส่วนของการ Handler request ``/api/health`` จากที่ใรตอนแรกเราทำการ Response โดยการใช้ ``fmt.Fprintf(w, "I'm alive!")`` เพื่อทำการ Return ค่าแต่ตอนนี้เราจะทำการให้มีการ Response ในรูปแบบ JSON พร้อมกับทำการกำหนด Http status และ Header เพื่อระบุว่ามีการ Response ค่าในรูปแบบ JSON
+
+    ```GO
+        h.Router.HandleFunc("/api/health", func(w http.ResponseWriter, r *http.Request) {
+            // fmt.Fprintf(w, "I'm alive!")
+            w.Header().Set("Content-type", "application/json; charset=UTF-8")
+            w.WriteHeader(http.StatusOK)
+            if err := json.NewEncoder(w).Encode(Response{Message: "I am Alive"}); err != nil {
+                panic(err)
+            }
+        })
+    ```
+
+    > จากด้่นบนสิ่งที่น่าสนใจคือการใช้ ``panic(err)`` เพื่อทำการจัดการ กรณีที่เกิด Error จากที่ได้อ่านดูมันคล้ายกับการ throw exception [REF](https://www.geeksforgeeks.org/panic-in-golang/)
+
+
+
 
 
 
