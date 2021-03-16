@@ -260,6 +260,19 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
 
     > จากด้่นบนสิ่งที่น่าสนใจคือการใช้ ``panic(err)`` เพื่อทำการจัดการ กรณีที่เกิด Error จากที่ได้อ่านดูมันคล้ายกับการ throw exception [REF](https://www.geeksforgeeks.org/panic-in-golang/)
 
+- Handling Errors
+    Implement sendErrorResponse and replace ``fmt.Fprintf(w, "Failed to delete comment by comment id")`` with this method
+    ```GO
+    [filename : handler.go]
+    func sendErrorResponse(w http.ResponseWriter, message string, err error) {
+        w.WriteHeader(http.StatusInternalServerError)
+        if err := json.NewEncoder(w).Encode(Response{Message: message, Error: err.Error()}); err != nil {
+            panic(err)
+
+        }
+    }
+    ```
+
 
 
 
