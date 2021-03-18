@@ -273,6 +273,25 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
     }
     ```
 
+- Containerizing our Go Apps with Docker
+    Create Dockerfile in root directory
+        > standard_init_linux.go:219: exec user process caused: no such file or directory ทำการ fix โดยการ เพิ่ม ``GOARCH=amd64``
+    ```powershell
+    //Build commmand
+    docker build -t comments-api . 
+
+    karoon@Nuttakorns-MacBook-Pro updev-go-rest-api-course % docker run -it -p 8088:8088 comments-api
+    GO REST API Course
+    Setting Up Our App
+    Setting up new database connection
+    Error starting up our REST API
+    dial tcp 127.0.0.1:5432: connect: connection refused
+    ```
+    หลังจากเราลองทำการ run image ที่เราได้ทำการ Build เราก็พบ Error ตามตัวอย่างด้านบน จาก Error เราสามารถรู้ได้ทันทีว่าน่าจะเกี่ยวกับ การเชื่อมต่อกับตัว postgres db นั้นเอง
+
+- Docker-compose for our Go Services
+
+
 
 
 
