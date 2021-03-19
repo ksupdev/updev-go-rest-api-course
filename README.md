@@ -290,6 +290,11 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
     หลังจากเราลองทำการ run image ที่เราได้ทำการ Build เราก็พบ Error ตามตัวอย่างด้านบน จาก Error เราสามารถรู้ได้ทันทีว่าน่าจะเกี่ยวกับ การเชื่อมต่อกับตัว postgres db นั้นเอง
 
 - Docker-compose for our Go Services
+    Create file docker componse
+    Run docker compose
+    ``` powershell
+    docker-compose up --build
+    ```
 
 
 
