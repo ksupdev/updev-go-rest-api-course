@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -11,19 +12,25 @@ import (
 func NewDatabase() (*gorm.DB, error) {
 	fmt.Println("Setting up new database connection")
 	// os.Getenv is not work for windows
-	// dbUsername := os.Getenv("DB_USER")
-	// dbPassword := os.Getenv("DB_PASSWORD")
-	// dbHost := os.Getenv("DB_HOST")
-	// dbTable := os.Getenv("DB_TABLE")
-	// dbPort := os.Getenv("DB_PORT")
+	dbUsername := os.Getenv("DB_USERNAME")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	dbHost := os.Getenv("DB_HOST")
+	dbTable := os.Getenv("DB_TABLE")
+	dbPort := os.Getenv("DB_PORT")
 
-	dbUsername := "postgres"
-	dbPassword := "postgres"
-	dbHost := "localhost"
-	dbTable := "postgres"
-	dbPort := "5432"
+	// dbUsername := "postgres"
+	// dbPassword := "postgres"
+	// dbHost := "localhost"
+	// dbTable := "postgres"
+	// dbPort := "5432"
 
 	connectString := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", dbHost, dbPort, dbUsername, dbTable, dbPassword)
+
+	connectString = fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable",
+		dbUsername,
+		dbPassword,
+		dbHost,
+		dbPort, dbTable)
 
 	db, err := gorm.Open("postgres", connectString)
 
