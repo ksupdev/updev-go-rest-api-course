@@ -296,6 +296,35 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
     docker-compose up --build
     ```
 
+- Acceptance Tests with Resty
+  การติดตั้ง Package เราสามารถไป coppy package ที่เราต้องการมาไว้ที่ go.mod ได้เลย แล้วทำการ run ``go mod tidy`` จากด้านล่าง
+  เราแค่ coppy ``github.com/go-resty/resty/v2 v2.5.0`` มาและทำการ Run cpmmand
+  ``` GO
+    module github.com/ksupdev/updev-go-rest-api-course
+
+    go 1.16
+
+    require (
+        github.com/go-resty/resty/v2 v2.5.0
+        github.com/gorilla/mux v1.8.0
+        github.com/jinzhu/gorm v1.9.16
+    )
+  ```
+
+  ```powershell
+    aroon@Nuttakorns-MacBook-Pro updev-go-rest-api-course % go mod tidy
+    go: finding module for package github.com/go-resty/resty/v2
+    go: downloading github.com/go-resty/resty v1.12.0
+    go: downloading github.com/go-resty/resty/v2 v2.5.0
+    go: found github.com/go-resty/resty/v2 in github.com/go-resty/resty/v2 v2.5.0
+  ```
+
+  run test command 
+    % go test ./... -tags=e2e -v
+
+
+
+
 
 
 
