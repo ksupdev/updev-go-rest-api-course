@@ -322,6 +322,14 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
   run test command 
     % go test ./... -tags=e2e -v
 
+- Running K8s Locally With Kind
+
+- Logging with Logrus
+    Install ``github.com/sirupsen/logrus``
+    ```powershell
+        go get github.com/sirupsen/logrus
+    ```
+
 
 
 

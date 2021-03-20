@@ -25,6 +25,7 @@ services:
       DB_HOST: "db"
       DB_TABLE: "postgres"
       DB_PORT: 5432
+      SSL_MODE: "disable"
     ports:
       - "8088:8088"
     depends_on: 

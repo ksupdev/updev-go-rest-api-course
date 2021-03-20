@@ -1,21 +1,30 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/ksupdev/updev-go-rest-api-course/internal/comment"
 	"github.com/ksupdev/updev-go-rest-api-course/internal/database"
 	transportHTTP "github.com/ksupdev/updev-go-rest-api-course/internal/transport/http"
+	log "github.com/sirupsen/logrus"
 )
 
-// App - the struct which contains thinks like pointers
+// App - contain application informaion
 // to database connections
-type App struct{}
+type App struct {
+	Name    string
+	Version string
+}
 
 // Run setup our application
 func (app *App) Run() error {
-	fmt.Println("Setting Up Our App")
+	// fmt.Println("Setting Up Our App")
+	log.SetFormatter(&log.JSONFormatter{})
+	log.WithFields(
+		log.Fields{
+			"AppName":    app.Name,
+			"AppVersion": app.Version,
+		}).Info("Setting up application")
 
 	var err error
 	db, err := database.NewDatabase()
@@ -35,7 +44,8 @@ func (app *App) Run() error {
 
 	if err := http.ListenAndServe(":8088", handler.Router); err != nil {
 
-		fmt.Println("Failed to set up server")
+		// fmt.Println("Failed to set up server")
+		log.Error("Failed to set up server")
 		return err
 	}
 
@@ -43,11 +53,16 @@ func (app *App) Run() error {
 }
 
 func main() {
-	fmt.Println("GO REST API Course")
-	app := App{}
+	// fmt.Println("GO REST API Course")
+	app := App{
+		Name:    "Commenting Service",
+		Version: "1.0.0",
+	}
 	if err := app.Run(); err != nil {
-		fmt.Println("Error starting up our REST API")
-		fmt.Println(err)
+		// fmt.Println("Error starting up our REST API")
+		log.Error("Error starting up our REST API")
+		log.Fatal(err)
+		// fmt.Println(err)
 	}
 
 }
