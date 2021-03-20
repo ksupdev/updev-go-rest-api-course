@@ -334,6 +334,58 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
     - ทำการแยกส่วนของ comments endpoint ออกมากจาก ``handler.go`` ไปไว้ใน ``comment.gp`` ซึ่งอยู่ใน Package เดียวกัน
     > จากการสังเกตจะเห็นว่า file ``handler.go`` และ ``comment.go`` สามารถทำการอ้างถึงกันได้โดยทันที แต่กรณีที่มีการเรียกใช้ pacakge อื่นนั้นจะเป็นการเรียก โดยจะอ้างถึง ``module`` ที่มีการกำหนดไว้ใน module.go และต่อด้วย path ที่ package นั้นอยู่ เช่น ``github.com/ksupdev/updev-go-rest-api-course/internal/transport/http`` module คือ github.com/ksupdev/updev-go-rest-api-course และ path ของ package คือ nternal/transport/http
 
+- Basic Auth Middleware
+    Implement method สำหรับการตรวจสอบ Basic auth 
+
+    ```GO
+    // BasicAuth - a handy middleware function that will provide basic auth around specific endpoint
+    func BasicAuth(original func(w http.ResponseWriter, r *http.Request)) func(w http.ResponseWriter, r *http.Request) {
+        return func(w http.ResponseWriter, r *http.Request) {
+            log.Info("basic auth endpoint hit")
+            user, pass, ok := r.BasicAuth()
+            if user == "admin" && pass == "admin" && ok {
+                original(w, r)
+            } else {
+                w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+                sendErrorResponse(w, "not authorized", errors.New("not authorized"))
+            }
+
+        }
+    }
+    ```
+
+    โดยหลักการก็คือเราได้ทำการออกแบบให้ method นี้ทำการรับ argument เป็น Method ที่จะมีการทำงานหลังจากที่ผ่านการตรวจสอบในส่วนของ Basic authen
+
+    > ``errors`` ใช้ในการสร้าง error message ``errors.New("not authorized")``
+    
+    ตัวอย่างการนำไปใช้
+    ``` GO
+    func (h *Handler) SetupRoutes() {
+        // fmt.Println("Setting Up Routes")
+        log.Info("Setting Up Routes")
+        h.Router = mux.NewRouter()
+        h.Router.Use(LoggingMiddleware)
+
+        h.Router.HandleFunc("/api/comment", h.GetAllComments).Methods("GET")
+        h.Router.HandleFunc("/api/comment", BasicAuth(h.PostComment)).Methods("POST")
+        h.Router.HandleFunc("/api/comment/{id}", h.GetComment).Methods("GET")
+        h.Router.HandleFunc("/api/comment/{id}", BasicAuth(h.UpdateComment)).Methods("PUT")
+        h.Router.HandleFunc("/api/comment/{id}", BasicAuth(h.DeleteComment)).Methods("DELETE")
+        h.Router.HandleFunc("/api/health", func(w http.ResponseWriter, r *http.Request) {
+            // fmt.Fprintf(w, "I'm alive!")
+            w.Header().Set("Content-type", "application/json; charset=UTF-8")
+            w.WriteHeader(http.StatusOK)
+            if err := json.NewEncoder(w).Encode(Response{Message: "I am Alive"}); err != nil {
+                panic(err)
+            }
+        })
+    }
+    ```
+    วิธีในการทดสอบผ่าน postman
+    
+    ![postman](./request-with-basicauth.png)
+
+
 
 
 
