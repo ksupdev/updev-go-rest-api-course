@@ -330,6 +330,10 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
         go get github.com/sirupsen/logrus
     ```
 
+- Logging Middleware
+    - ทำการแยกส่วนของ comments endpoint ออกมากจาก ``handler.go`` ไปไว้ใน ``comment.gp`` ซึ่งอยู่ใน Package เดียวกัน
+    > จากการสังเกตจะเห็นว่า file ``handler.go`` และ ``comment.go`` สามารถทำการอ้างถึงกันได้โดยทันที แต่กรณีที่มีการเรียกใช้ pacakge อื่นนั้นจะเป็นการเรียก โดยจะอ้างถึง ``module`` ที่มีการกำหนดไว้ใน module.go และต่อด้วย path ที่ package นั้นอยู่ เช่น ``github.com/ksupdev/updev-go-rest-api-course/internal/transport/http`` module คือ github.com/ksupdev/updev-go-rest-api-course และ path ของ package คือ nternal/transport/http
+
 
 
 
