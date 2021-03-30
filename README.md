@@ -297,7 +297,7 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
     ```
 
 - Acceptance Tests with Resty
-  การติดตั้ง Package เราสามารถไป coppy package ที่เราต้องการมาไว้ที่ go.mod ได้เลย แล้วทำการ run ``go mod tidy`` จากด้านล่าง
+  > การติดตั้ง Package เราสามารถไป coppy package ที่เราต้องการมาไว้ที่ go.mod ได้เลย แล้วทำการ run ``go mod tidy`` จากด้านล่าง
   เราแค่ coppy ``github.com/go-resty/resty/v2 v2.5.0`` มาและทำการ Run cpmmand
   ``` GO
     module github.com/ksupdev/updev-go-rest-api-course
@@ -384,6 +384,29 @@ Example project https://tutorialedge.net/courses/go-rest-api-course/02-project-s
     วิธีในการทดสอบผ่าน postman
     
     ![postman](./request-with-basicauth.png)
+
+- JWT Authentication
+    Install jwt-go ``go get github.com/dgrijalva/jwt-go``
+
+    ```powershell
+    karoon@Nuttakorns-MacBook-Pro updev-go-rest-api-course % go get github.com/dgrijalva/jwt-go
+    go: downloading github.com/dgrijalva/jwt-go v1.0.2
+    go: downloading github.com/dgrijalva/jwt-go v3.2.0+incompatible
+    go: github.com/dgrijalva/jwt-go upgrade => v3.2.0+incompatible
+    ```
+
+    ทำการสร้าง jwt เพื่อทำการทดสอบ 
+    ```
+        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.2yPNTTY3Y5jUwYBPAJAfUc84Ybv2qPbZY_OHI7tzuug
+    ```
+
+    โดยเราสามารสร้างได้จาก web jwt.io แต่สิ่งที่สำคัญที่สุดคือเราต้องทำการ ``var mySigningKey = []byte("missionimpossible")`` นำไปไว้ในส่วนของ ``VERIFY SIGNATURE `` ตามรูปด้านล่าง
+    ![jwt](./jwt-io-create.png)
+
+    และทำการทดสอบโดยใช้ postman
+
+    ![postman](./postman-jwt-go.png)
+
 
 
 

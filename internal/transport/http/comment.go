@@ -21,12 +21,14 @@ func (h *Handler) GetComment(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// fmt.Fprintf(w, "Unable to parse UINT from ID")
 		sendErrorResponse(w, "Unable to parse UINT from ID", err)
+		return
 	}
 
 	comment, err := h.Service.GetComment(uint(i))
 	if err != nil {
 		// fmt.Fprintf(w, "Error Retrieving Comment By ID")
 		sendErrorResponse(w, "Error Retrieving Comment By ID", err)
+		return
 	}
 
 	if err := json.NewEncoder(w).Encode(comment); err != nil {
@@ -46,6 +48,7 @@ func (h *Handler) GetAllComments(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// fmt.Fprintf(w, "Failed to retrieve all comments")
 		sendErrorResponse(w, "Failed to retrieve all comments", err)
+		return
 	}
 	// fmt.Fprintf(w, "%+v", comments)
 	if err := json.NewEncoder(w).Encode(comments); err != nil {
@@ -64,6 +67,7 @@ func (h *Handler) PostComment(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewDecoder(r.Body).Decode(&comment); err != nil {
 		// fmt.Fprintf(w, "Failed to decode JSON Body")
 		sendErrorResponse(w, "Failed to decode JSON Body", err)
+		return
 	}
 
 	comment, err := h.Service.PostComment(comment)
@@ -71,6 +75,7 @@ func (h *Handler) PostComment(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// fmt.Fprintf(w, "Failed to post new comment")
 		sendErrorResponse(w, "Failed to post new comment", err)
+		return
 	}
 
 	if err := json.NewEncoder(w).Encode(comment); err != nil {
@@ -90,6 +95,7 @@ func (h *Handler) UpdateComment(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewDecoder(r.Body).Decode(&comment); err != nil {
 		// fmt.Fprintf(w, "Failed to decode JSON Body")
 		sendErrorResponse(w, "Failed to decode JSON Body", err)
+		return
 	}
 
 	vars := mux.Vars(r)
@@ -101,6 +107,7 @@ func (h *Handler) UpdateComment(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// fmt.Fprintf(w, "Faild to update comment")
 		sendErrorResponse(w, "Faild to update comment", err)
+		return
 	}
 
 	if err := json.NewEncoder(w).Encode(comment); err != nil {
@@ -123,6 +130,7 @@ func (h *Handler) DeleteComment(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// fmt.Fprintf(w, "Unable to parse UINT from ID")
 		sendErrorResponse(w, "Unable to parse UINT from ID", err)
+		return
 	}
 
 	// fmt.Println("--- track --- ", i)
@@ -131,6 +139,7 @@ func (h *Handler) DeleteComment(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// fmt.Fprintf(w, "Failed to delete comment by comment id")
 		sendErrorResponse(w, "Failed to delete comment by comment id", err)
+		return
 	}
 	// fmt.Fprintf(w, "Successfully deleted comment")
 
